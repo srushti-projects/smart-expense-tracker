@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import sqlite3
+import pandas as pd
 
 app = Flask(__name__)
 CORS(app)
@@ -24,6 +25,8 @@ def add_expense():
     ))
 
     conn.commit()
+    df = pd.read_sql_query("SELECT * FROM expenses", conn)
+    df.to_csv("data/expenses_live.csv", index=False)
     conn.close()
 
     return jsonify({"message": "Expense added successfully"})
