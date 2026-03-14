@@ -1,41 +1,52 @@
-let expenses = JSON.parse(localStorage.getItem("expenses")) || []
+const form = document.getElementById("expenseForm");
 
-function addExpense(){
+form.addEventListener("submit", async function(e){
 
-let name = document.getElementById("name").value
-let amount = document.getElementById("amount").value
-let category = document.getElementById("category").value
+e.preventDefault();
 
-let expense = {
-name:name,
-amount:amount,
-category:category
-}
+const category = document.getElementById("category").value;
+const amount = document.getElementById("amount").value;
+const date = document.getElementById("date").value;
 
-expenses.push(expense)
+await fetch("http://127.0.0.1:5000/add-expense", {
 
-localStorage.setItem("expenses", JSON.stringify(expenses))
+method: "POST",
 
-displayExpenses()
+headers: {
+"Content-Type": "application/json"
+},
 
-}
-
-function displayExpenses(){
-
-let list = document.getElementById("expenseList")
-
-list.innerHTML = ""
-
-expenses.forEach(function(exp){
-
-let item = document.createElement("li")
-
-item.textContent = exp.name + " - Rs" + exp.amount + " (" + exp.category + ")"
-
-list.appendChild(item)
-
+body: JSON.stringify({
+category: category,
+amount: amount,
+date: date
 })
 
-}
+});
 
-displayExpenses()
+alert("Expense Added!");
+
+});
+
+async function loadExpenses(){
+
+const response = await fetch("http://127.0.0.1:5000/expenses");
+
+const data = await response.json();
+
+const list = document.getElementById("expenseList");
+
+list.innerHTML = "";
+
+data.forEach(exp => {
+
+const li = document.createElement("li");
+
+li.innerText =
+exp[1] + " | " + exp[2] + " | Rs " + exp[3];
+
+list.appendChild(li);
+
+});
+
+}

@@ -9,31 +9,35 @@
 
 <h1>Smart Expense Tracker</h1>
 
-<h3>Add Expense</h3>
+<h2>Add Expense</h2>
 
-<label>Expense Name:</label>
-<input type="text" id="name">
+<form id="expenseForm">
 
+Category:
+<input type="text" id="category" required>
 <br><br>
 
-<label>Amount:</label>
-<input type="number" id="amount">
-
+Amount:
+<input type="number" id="amount" required>
 <br><br>
 
-<label>Category:</label>
-<input type="text" id="category">
-
+Date:
+<input type="date" id="date" required>
 <br><br>
 
-<button onclick="addExpense()">Add Expense</button>
+<button type="submit">Add Expense</button>
 
-<h3>Expenses</h3>
+</form>
+
+<br>
+
+<button onclick="loadExpenses()">Load Expenses</button>
+
+<h2>All Expenses</h2>
 
 <ul id="expenseList"></ul>
 
 <script src="script.js"></script>
 
 </body>
-
 </html>
