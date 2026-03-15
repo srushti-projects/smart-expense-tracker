@@ -7,6 +7,7 @@ e.preventDefault();
 const category = document.getElementById("category").value;
 const amount = document.getElementById("amount").value;
 const date = document.getElementById("date").value;
+const payment_mode = document.getElementById("payment_mode").value;
 
 await fetch("http://127.0.0.1:5000/add-expense", {
 
@@ -19,7 +20,8 @@ headers: {
 body: JSON.stringify({
 category: category,
 amount: amount,
-date: date
+date: date,
+payment_mode: payment_mode
 })
 
 });
@@ -27,6 +29,7 @@ date: date
 alert("Expense Added!");
 
 });
+
 
 async function loadExpenses(){
 
@@ -42,11 +45,17 @@ data.forEach(exp => {
 
 const li = document.createElement("li");
 
+li.className = "list-group-item";
+
 li.innerText =
-exp[1] + " | " + exp[2] + " | Rs " + exp[3];
+exp.date + " | " + exp.category + " | Rs " + exp.amount + " | " + exp.payment_mode;
 
 list.appendChild(li);
 
 });
 
+}
+
+function openDashboard(){
+    alert("Open your Power BI dashboard file and click Refresh to see the latest data.");
 }

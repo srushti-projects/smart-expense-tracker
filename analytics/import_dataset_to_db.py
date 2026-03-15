@@ -4,12 +4,15 @@ import sqlite3
 # load kaggle dataset
 df = pd.read_csv("data/expenses.csv")
 
-# connect to database
+# rename columns to match database
+df.columns = ["date","category","amount","payment_mode","month"]
+
+# connect database
 conn = sqlite3.connect("database/expenses.db")
 
-# insert data into table
+# insert data
 df.to_sql("expenses", conn, if_exists="append", index=False)
 
 conn.close()
 
-print("Dataset imported into database successfully!")
+print("Dataset imported successfully!")
